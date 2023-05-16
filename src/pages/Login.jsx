@@ -27,7 +27,7 @@ class Login extends React.Component {
       await createUser({ name });
       this.setState({ loading: false, redirect: true });
     } catch (err) {
-      console.error('Erro ao criar usuário:', err);
+      console.error('Erro ao entrar com usuário:', err);
       this.setState({ loading: false });
     }
   };

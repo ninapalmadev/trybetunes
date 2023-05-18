@@ -58,25 +58,33 @@ class Search extends React.Component {
     const { albuns, artistName, notFound, loading, result, search } = this.state;
     return (
       <div data-testid="page-search">
-        <form action="">
-          <input
-            type="text"
-            data-testid="search-artist-input"
-            id="search"
-            value={ search }
-            placeholder="Busque por nome do artista"
-            onChange={ this.handleInputChange }
-          />
-          <button
-            type="submit"
-            data-testid="search-artist-button"
-            disabled={ search.length < minChar }
-            onClick={ this.handleSearch }
-          >
-            Pesquisar
-          </button>
-        </form>
-
+        <div
+          className="flex items-center my-auto justify-evenly h-60
+        bg-gradient-to-r from-indigo-500 from-10%
+        via-sky-500 via-30% to-emerald-500 to-90%
+        "
+        >
+          <form className="flex items-center my-auto justify-evenly">
+            <input
+              type="text"
+              data-testid="search-artist-input"
+              id="search"
+              value={ search }
+              placeholder="Busque por nome do artista"
+              onChange={ this.handleInputChange }
+              className="mr-4 border-double border-4 border-sky-500 rounded-lg p-3"
+            />
+            <button
+              type="submit"
+              data-testid="search-artist-button"
+              disabled={ search.length < minChar }
+              onClick={ this.handleSearch }
+              className="bg-white rounded-lg p-3"
+            >
+              Pesquisar
+            </button>
+          </form>
+        </div>
         {loading ? (<Load />) : (
           <div>
             {result && (
@@ -84,24 +92,35 @@ class Search extends React.Component {
                 {`Resultado de álbuns de: ${artistName}`}
               </p>
             )}
-            {
-              albuns.length > 0 ? (
-                albuns.map((album) => (
-                  <div className="albumCard" key={ album.collectionId }>
-                    <img src={ album.artworkUrl100 } alt={ album.collectionName } />
-                    <p>{album.collectionName}</p>
-                    <Link
-                      to={ `/album/${album.collectionId}` }
-                      data-testid={ `link-to-album-${album.collectionId}` }
+            <section className="grid grid-cols-4 h-7 mt-7 mx-14 gap-5 mb-6">
+              {
+                albuns.length > 0 ? (
+                  albuns.map((album) => (
+                    <div
+                      className="border-solid border-2
+                      border-indigo-950 p-3 rounded-md text-center"
+                      key={ album.collectionId }
                     >
-                      Ver mais detalhes
-                    </Link>
-                  </div>
-                ))
-              ) : (
-                <h2>Nenhum álbum foi encontrado</h2>
-              )
-            }
+                      <img
+                        src={ album.artworkUrl100 }
+                        alt={ album.collectionName }
+                        className="mx-auto"
+                      />
+                      <p>{album.collectionName}</p>
+                      <Link
+                        to={ `/album/${album.collectionId}` }
+                        data-testid={ `link-to-album-${album.collectionId}` }
+                        className="font-bold pt-2"
+                      >
+                        Ver mais detalhes
+                      </Link>
+                    </div>
+                  ))
+                ) : (
+                  <h2>Nenhum álbum foi encontrado</h2>
+                )
+              }
+            </section>
             {notFound && <p>{notFound}</p>}
           </div>
         )}

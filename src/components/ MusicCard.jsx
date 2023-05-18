@@ -5,8 +5,8 @@ class MusicCard extends React.Component {
   render() {
     const { previewUrl, trackName } = this.props;
     return (
-      <div>
-        <h2>
+      <div className="my-4">
+        <h2 className="my-2">
           {trackName}
         </h2>
         <audio data-testid="audio-component" src={ previewUrl } controls>

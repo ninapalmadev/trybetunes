@@ -8,7 +8,6 @@ class Search extends React.Component {
   state = {
     albuns: [],
     artistName: '',
-    notFound: false,
     loading: false,
     result: false,
     search: '',
@@ -23,19 +22,14 @@ class Search extends React.Component {
   handleSearch = async (event) => {
     event.preventDefault();
     const { search } = this.state;
-    // this.setState({
-    //   loading: true,
-    //   artistName: search,
-    // });
     try {
       this.setState({
         albuns: [],
         artistName: '',
-        notFound: false,
         loading: true,
       });
       const response = await searchAlbumsAPI(search);
-      console.log(response);
+      // console.log(response);
       this.setState({
         albuns: response,
         artistName: search,
@@ -47,7 +41,6 @@ class Search extends React.Component {
       console.log('Erro ao fazer a busca:', err);
       this.setState({
         artistName: '',
-        notFound: true,
         loading: false,
         search: '',
       });
@@ -55,7 +48,7 @@ class Search extends React.Component {
   };
 
   render() {
-    const { albuns, artistName, notFound, loading, result, search } = this.state;
+    const { albuns, artistName, loading, result, search } = this.state;
     return (
       <div data-testid="page-search">
         <div
@@ -88,13 +81,18 @@ class Search extends React.Component {
         {loading ? (<Load />) : (
           <div>
             {result && (
-              <p data-testid="search-result-text">
+              <p
+                data-testid="search-result-text"
+                className="text-center mt-3"
+              >
                 {`Resultado de álbuns de: ${artistName}`}
               </p>
             )}
             <section className="grid grid-cols-4 h-7 mt-7 mx-14 gap-5 mb-6">
               {
-                albuns.length > 0 ? (
+                albuns.length === 0 || !albuns.length ? (
+                  <p>Nenhum álbum foi encontrado</p>
+                ) : (
                   albuns.map((album) => (
                     <div
                       className="border-solid border-2
@@ -116,12 +114,9 @@ class Search extends React.Component {
                       </Link>
                     </div>
                   ))
-                ) : (
-                  <h2>Nenhum álbum foi encontrado</h2>
                 )
               }
             </section>
-            {notFound && <p>{notFound}</p>}
           </div>
         )}
       </div>

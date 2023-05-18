@@ -37,26 +37,27 @@ class Login extends React.Component {
     if (redirect) return <Redirect to="/search" />;
     return (
       <div data-testid="page-login">
-        <h1>Trybe Tunes</h1>
-        <form>
-          <input
-            type="text"
-            id="name"
-            value={ name }
-            data-testid="login-name-input"
-            placeholder="Nome"
-            onChange={ this.handleInputChange }
-          />
-          <button
-            type="submit"
-            data-testid="login-submit-button"
-            disabled={ name.length < minChar }
-            onClick={ this.handleButtonSubmit }
-          >
-            Entrar
-          </button>
-        </form>
-        {loading && <Load />}
+        { loading ? <Load />
+          : (
+            <form>
+              <input
+                type="text"
+                id="name"
+                value={ name }
+                data-testid="login-name-input"
+                placeholder="Nome"
+                onChange={ this.handleInputChange }
+              />
+              <button
+                type="submit"
+                data-testid="login-submit-button"
+                disabled={ name.length < minChar }
+                onClick={ this.handleButtonSubmit }
+              >
+                Entrar
+              </button>
+            </form>
+          )}
       </div>
     );
   }

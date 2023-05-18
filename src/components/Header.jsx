@@ -27,7 +27,7 @@ class Header extends React.Component {
     const { name, loading } = this.state;
     return (
       <header data-testid="header-component">
-        <nav className="flex space-x-4 bg-gray-800 h-16 ">
+        <nav className="flex space-x-4 bg-gray-800 h-16 pl-8">
           <Link
             data-testid="link-to-search"
             to="/search"
@@ -53,7 +53,17 @@ class Header extends React.Component {
             Profile
           </Link>
         </nav>
-        { loading ? <Load /> : <p data-testid="header-user-name">{name}</p>}
+        {
+          loading
+            ? <Load /> : (
+              <p
+                data-testid="header-user-name"
+                className="bg-gray-600 text-center h-8 text-white self-center uppercase"
+              >
+                {name}
+              </p>
+            )
+        }
       </header>
     );
   }

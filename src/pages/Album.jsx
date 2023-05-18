@@ -18,7 +18,6 @@ class Album extends React.Component {
   getAlbumSongs = async () => {
     const { match: { params: { id } } } = this.props;
     const [album, ...musics] = await getMusics(id);
-    console.log(album);
 
     this.setState({
       album,
@@ -58,13 +57,15 @@ class Album extends React.Component {
             </section>
           )
         }
-        <section className="grid grid-cols-4 h-7 mt-7 mx-14">
+        <section className="grid grid-cols-4 h-7 mt-7 mx-14 gap-5">
           {musics.map(
-            ({ previewUrl, trackName }, index) => (
+            ({ previewUrl, trackName, trackId }, index) => (
               <MusicCard
                 key={ index }
                 trackName={ trackName }
                 previewUrl={ previewUrl }
+                trackId={ trackId }
+                musics={ musics }
               />
             ),
           )}

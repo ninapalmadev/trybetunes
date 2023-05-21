@@ -2,13 +2,15 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import getMusics from '../services/musicsAPI';
 import Load from '../components/Load';
-import MusicCard from '../components/ MusicCard';
+import MusicCard from '../components/MusicCard';
+import { getFavoriteSongs } from '../services/favoriteSongsAPI';
 
 class Album extends React.Component {
   state = {
     album: [],
     musics: [],
     loading: true,
+    favorites: [],
   };
 
   componentDidMount() {
@@ -18,16 +20,18 @@ class Album extends React.Component {
   getAlbumSongs = async () => {
     const { match: { params: { id } } } = this.props;
     const [album, ...musics] = await getMusics(id);
+    const favorites = await getFavoriteSongs();
 
     this.setState({
       album,
       musics,
       loading: false,
+      favorites,
     });
   };
 
   render() {
-    const { album, musics, loading } = this.state;
+    const { album, musics, loading, favorites } = this.state;
     return (
       <div data-testid="page-album">
         <h1 className="text-center text-cyan-950 ">
@@ -66,6 +70,8 @@ class Album extends React.Component {
                 previewUrl={ previewUrl }
                 trackId={ trackId }
                 musics={ musics }
+                album={ album }
+                favorites={ favorites }
               />
             ),
           )}
